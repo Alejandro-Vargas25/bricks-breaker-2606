@@ -29,7 +29,8 @@ void Game::Reset()
 	brick.height = 2;
 	brick.y_position = 5;
 	brick.doubleThick = true;
-	brick.color = ConsoleColor::DarkGreen;
+	// dark cyan sits 3 steps up from black
+	brick.color = ConsoleColor::DarkCyan;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -96,10 +97,15 @@ void Game::CheckCollision()
 	{
 		if (bricks[i].Contains(ball.x_position + ball.x_velocity, ball.y_position + ball.y_velocity))
 		{
-			bricks[i].color = ConsoleColor(bricks[i].color - 1);
 			ball.y_velocity *= -1;
 
 			// TODO #5 - If the ball hits the same brick 3 times (color == black), remove it from the vector
+			// darken the brick, once it hits black its done, erase it
+			bricks[i].color = ConsoleColor(bricks[i].color - 1);
+			if (bricks[i].color == Black)
+			{
+				bricks.erase(bricks.begin() + i);
+			}
 			break;
 		}
 	}
