@@ -86,6 +86,13 @@ void Game::Render() const
 		brick.Draw();
 	}
 
+	// TODO #6 render part , victory text
+	if (bricks.empty())
+	{
+		Console::ForegroundColor(White);
+		Console::WordWrap(23, 20, 34, "You win! Press 'R' to play again.");
+	}
+
 	Console::Lock(false);
 }
 
@@ -111,7 +118,11 @@ void Game::CheckCollision()
 	}
 
 	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
-
+	// no bricks left, pause the ball, the text gets drawn in Render
+	if (bricks.empty())
+	{
+		ball.moving = false;
+	}
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
 	{
