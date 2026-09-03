@@ -23,7 +23,7 @@ void Game::Reset()
 	// clear out any old bricks first
 	bricks.clear();
 
-	// set up one brick and push 5 copies evenly spaced accross the row
+	// set up one brick and push 5 copies evenly spaced across the row
 	Box brick;
 	brick.width = 10;
 	brick.height = 2;
@@ -92,6 +92,12 @@ void Game::Render() const
 		Console::ForegroundColor(White);
 		Console::WordWrap(23, 20, 34, "You win! Press 'R' to play again.");
 	}
+	// TODO #7 render part , defeat text
+	if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		Console::ForegroundColor(White);
+		Console::WordWrap(23, 20, 35, "You lose. Press 'R' to play again.");
+	}
 
 	Console::Lock(false);
 }
@@ -130,4 +136,9 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	//ball reached the bottom row, pause it, Render draws the lose text
+	if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		ball.moving = false;
+	}
 }
